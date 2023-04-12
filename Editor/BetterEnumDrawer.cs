@@ -45,23 +45,17 @@ public class BetterEnumDrawer : PropertyDrawer
         EditorGUI.BeginChangeCheck();
         {
             Rect fieldPosition = new Rect(position.x + BUTTON_WIDTH + SPACE_BETWEEN_ELEMENTS, position.y, position.width, position.height);
-            EditorGUI.PropertyField(fieldPosition, property, label);
-
-            if (EditorGUI.EndChangeCheck())
+            _ = EditorGUI.PropertyField(fieldPosition, property, label);
+        }
+        if (EditorGUI.EndChangeCheck())
+        {
+            currentElementSelected = property.enumValueIndex;
+        }
+        else
+        {
+            if (currentElementSelected < 0)
             {
                 currentElementSelected = property.enumValueIndex;
-            }
-            else
-            {
-                if (currentElementSelected < 0)
-                {
-                    currentElementSelected = property.enumValueIndex;
-                }
-                // ? Maybe you don't need this
-                else if (property.enumValueIndex != currentElementSelected)
-                {
-                    property.enumValueIndex = currentElementSelected;
-                }
             }
         }
     }
